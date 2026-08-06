@@ -1,0 +1,46 @@
+{
+  "name": "@todo/web",
+  "version": "1.0.0",
+  "description": "React frontend for To-Do application",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .tsx,.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist .vite"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
+    "@tanstack/react-query": "^5.28.0",
+    "@todo/types": "*",
+    "@todo/ui": "*",
+    "axios": "^1.6.2",
+    "lucide-react": "^0.339.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.49.0",
+    "react-router": "^7.0.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^8.52.0",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "@todo/eslint-config": "*",
+    "@todo/tsconfig": "*",
+    "@types/node": "^20.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.54.0",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8"
+  }
+}

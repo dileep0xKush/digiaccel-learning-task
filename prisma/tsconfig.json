@@ -1,0 +1,6 @@
+{
+  "extends": "@todo/tsconfig/node.json",
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
+}

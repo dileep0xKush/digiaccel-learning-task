@@ -1,0 +1,19 @@
+{
+  "name": "@todo/eslint-config",
+  "version": "1.0.0",
+  "description": "Shared ESLint configuration",
+  "private": true,
+  "files": [
+    "base.js",
+    "react.js",
+    "node.js"
+  ],
+  "dependencies": {
+    "@eslint/js": "^8.52.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react": "^7.33.2"
+  }
+}
