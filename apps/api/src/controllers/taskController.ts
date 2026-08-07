@@ -1,23 +1,27 @@
 import { Request, Response } from 'express';
 import { taskService } from '../services/taskService.js';
-import { Status } from '@prisma/client';
+import type { TaskStatus } from '../models/Task.js';
 
 export const taskController = {
   async getAllTasks(req: Request, res: Response) {
     const skip = parseInt(req.query.skip as string) || 0;
     const take = parseInt(req.query.take as string) || 50;
-    const status = req.query.status as Status | undefined;
+    const status = req.query.status as TaskStatus | undefined;
 
     const tasks = await taskService.getAllTasks(skip, take, status);
     const total = await taskService.countAllTasks();
 
     res.json({
       success: true,
-      data: tasks.map((t) => ({
-        ...t,
+      data: tasks.map((t: any) => ({
+        title: t.title,
+        description: t.description || '',
         dueDate: t.dueDate.toISOString(),
+        priority: t.priority,
+        status: t.status,
         createdAt: t.createdAt.toISOString(),
         updatedAt: t.updatedAt.toISOString(),
+        id: t._id?.toString() || t.id,
       })),
       total,
       page: Math.floor(skip / take) + 1,
@@ -30,13 +34,25 @@ export const taskController = {
     const { id } = req.params;
     const task = await taskService.getTaskById(id);
 
+    if (!task) {
+      res.status(404).json({
+        success: false,
+        message: 'Task not found',
+      });
+      return;
+    }
+
     res.json({
       success: true,
       data: {
-        ...task,
+        title: task.title,
+        description: task.description || '',
         dueDate: task.dueDate.toISOString(),
+        priority: task.priority,
+        status: task.status,
         createdAt: task.createdAt.toISOString(),
         updatedAt: task.updatedAt.toISOString(),
+        id: (task as any)._id?.toString() || task.id,
       },
     });
   },
@@ -47,10 +63,14 @@ export const taskController = {
     res.status(201).json({
       success: true,
       data: {
-        ...task,
+        title: task.title,
+        description: task.description || '',
         dueDate: task.dueDate.toISOString(),
+        priority: task.priority,
+        status: task.status,
         createdAt: task.createdAt.toISOString(),
         updatedAt: task.updatedAt.toISOString(),
+        id: (task as any)._id?.toString() || task.id,
       },
     });
   },
@@ -59,13 +79,25 @@ export const taskController = {
     const { id } = req.params;
     const task = await taskService.updateTask(id, req.body);
 
+    if (!task) {
+      res.status(404).json({
+        success: false,
+        message: 'Task not found',
+      });
+      return;
+    }
+
     res.json({
       success: true,
       data: {
-        ...task,
+        title: task.title,
+        description: task.description || '',
         dueDate: task.dueDate.toISOString(),
+        priority: task.priority,
+        status: task.status,
         createdAt: task.createdAt.toISOString(),
         updatedAt: task.updatedAt.toISOString(),
+        id: (task as any)._id?.toString() || task.id,
       },
     });
   },
@@ -75,13 +107,25 @@ export const taskController = {
     const { status } = req.body;
     const task = await taskService.updateTaskStatus(id, status);
 
+    if (!task) {
+      res.status(404).json({
+        success: false,
+        message: 'Task not found',
+      });
+      return;
+    }
+
     res.json({
       success: true,
       data: {
-        ...task,
+        title: task.title,
+        description: task.description || '',
         dueDate: task.dueDate.toISOString(),
+        priority: task.priority,
+        status: task.status,
         createdAt: task.createdAt.toISOString(),
         updatedAt: task.updatedAt.toISOString(),
+        id: (task as any)._id?.toString() || task.id,
       },
     });
   },
@@ -110,11 +154,15 @@ export const taskController = {
 
     return res.json({
       success: true,
-      data: tasks.map((t) => ({
-        ...t,
+      data: tasks.map((t: any) => ({
+        title: t.title,
+        description: t.description || '',
         dueDate: t.dueDate.toISOString(),
+        priority: t.priority,
+        status: t.status,
         createdAt: t.createdAt.toISOString(),
         updatedAt: t.updatedAt.toISOString(),
+        id: t._id?.toString() || t.id,
       })),
     });
   },

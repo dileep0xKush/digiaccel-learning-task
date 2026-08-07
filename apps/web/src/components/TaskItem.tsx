@@ -3,6 +3,7 @@ import { Task } from '@todo/types';
 import { useUpdateTaskStatus } from '../hooks/useTasks.js';
 import { Card } from '@todo/ui';
 import { Check, Edit2, Clock, AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface TaskItemProps {
   task: Task;
@@ -15,7 +16,18 @@ export default function TaskItem({ task }: TaskItemProps) {
   const handleStatusToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     const newStatus = task.status === 'IN_PROGRESS' ? 'COMPLETED' : 'IN_PROGRESS';
-    updateStatusMutation.mutate({ id: task.id, status: newStatus });
+    updateStatusMutation.mutate(
+      { id: task.id, status: newStatus },
+      {
+        onSuccess: () => {
+          const message = newStatus === 'COMPLETED' ? 'Task marked as completed' : 'Task moved to in progress';
+          toast.success(message);
+        },
+        onError: () => {
+          toast.error('Failed to update task status');
+        },
+      }
+    );
   };
 
   const dueDate = new Date(task.dueDate);

@@ -13,19 +13,34 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
+    "test:ci": "turbo run test:ci",
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,json,md}\"",
-    "test": "turbo run test",
+    "prepare": "husky install",
     "clean": "turbo run clean && rm -rf node_modules && find . -type d -name node_modules -exec rm -rf {} + 2>/dev/null; true",
     "db:migrate": "cd apps/api && npm run db:migrate",
     "db:seed": "cd apps/api && npm run db:seed"
   },
   "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "prettier": "^3.0.0",
-    "turbo": "^1.10.16"
+    "turbo": "^2.10.8"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
+  },
+  "packageManager": "npm@9.0.0",
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   }
 }

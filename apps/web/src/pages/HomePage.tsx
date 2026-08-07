@@ -1,18 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useWeeklyTasks } from '../hooks/useTasks.js';
-import { useToast } from '../hooks/useToast.js';
 import TaskForm from '../components/TaskForm.js';
 import WeeklyCard from '../components/WeeklyCard.js';
 import SearchBar from '../components/SearchBar.js';
-import ToastContainer from '../components/ToastContainer.js';
-import { Button } from '@todo/ui';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, Zap } from 'lucide-react';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { data: weeks, isLoading } = useWeeklyTasks();
-  const toast = useToast();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [expandedWeeks, setExpandedWeeks] = useState<number[]>([0]);
 
@@ -24,54 +20,65 @@ export default function HomePage() {
 
   const handleTaskCreated = () => {
     setIsFormOpen(false);
-    toast.success('Task created successfully!');
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 pb-24">
       {/* Header */}
-      <div className="sticky top-0 bg-white/80 backdrop-blur-md shadow-sm z-10 border-b border-gray-100">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="mb-4">
-            <h1 className="text-2xl font-bold text-gray-900">My Tasks</h1>
-            <p className="text-sm text-gray-600">Stay organized and track your progress</p>
+      <div className="sticky top-0 bg-gradient-to-r from-white to-blue-50/80 backdrop-blur-md shadow-sm z-10 border-b border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 py-6">
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-2">
+                <Zap size={24} className="text-white" />
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                My Tasks
+              </h1>
+            </div>
+            <p className="text-sm text-gray-600 ml-14">Stay organized, boost productivity</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <div className="flex-1">
               <SearchBar />
             </div>
-            <Button
+            <button
               onClick={() => navigate('/search')}
-              variant="ghost"
-              size="md"
-              className="flex items-center gap-2 hover:bg-gray-100"
+              className="bg-white border border-gray-300 hover:border-blue-500 text-gray-700 font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2"
             >
-              <Search size={20} />
-            </Button>
+              <Search size={18} />
+            </button>
           </div>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-8">
         {isLoading ? (
-          <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full w-8 h-8 border-b-2 border-blue-600" />
+          <div className="text-center py-16">
+            <div className="flex flex-col items-center gap-4">
+              <div className="inline-block animate-spin rounded-full w-12 h-12 border-4 border-blue-200 border-t-blue-600" />
+              <p className="text-gray-600 font-medium">Loading your tasks...</p>
+            </div>
           </div>
         ) : !weeks || weeks.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="mb-4 text-5xl">📋</div>
-            <p className="text-lg font-semibold text-gray-700 mb-2">No tasks yet</p>
-            <p className="text-gray-500 mb-6">Create your first task to get started!</p>
-            <Button
+          <div className="text-center py-20">
+            <div className="mb-6 inline-block bg-blue-100 rounded-full p-6">
+              <Zap size={48} className="text-blue-600" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">No tasks yet</h2>
+            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+              Create your first task to start organizing your week and boosting your productivity!
+            </p>
+            <button
               onClick={() => setIsFormOpen(true)}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 hover:shadow-lg"
             >
               <Plus size={20} />
-              Create Task
-            </Button>
+              Create Your First Task
+            </button>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-5">
             {weeks.map((week) => (
               <WeeklyCard
                 key={week.weekNumber}
@@ -87,16 +94,14 @@ export default function HomePage() {
       {/* Floating Action Button */}
       <button
         onClick={() => setIsFormOpen(true)}
-        className="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 active:scale-95"
+        className="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-5 shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 active:scale-95 group"
         aria-label="Add task"
         title="Add new task"
       >
-        <Plus size={28} />
+        <Plus size={32} className="group-hover:rotate-90 transition-transform duration-300" />
       </button>
 
       {isFormOpen && <TaskForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} onSuccess={handleTaskCreated} />}
-
-      <ToastContainer toasts={toast.toasts} onRemove={toast.removeToast} />
     </div>
   );
 }

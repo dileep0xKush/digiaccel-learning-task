@@ -1,9 +1,9 @@
-import { Status } from '@prisma/client';
+import type { TaskStatus } from '../models/Task.js';
 import { CreateTaskInput, UpdateTaskInput, WeeklyTasks } from '@todo/types';
 import { taskRepository } from '../repositories/taskRepository.js';
 
 export const taskService = {
-  async getAllTasks(skip?: number, take?: number, status?: Status) {
+  async getAllTasks(skip?: number, take?: number, status?: TaskStatus) {
     return taskRepository.findAll(skip, take, status);
   },
 
@@ -26,7 +26,7 @@ export const taskService = {
     return taskRepository.update(id, data);
   },
 
-  async updateTaskStatus(id: string, status: Status) {
+  async updateTaskStatus(id: string, status: TaskStatus) {
     await this.getTaskById(id);
     return taskRepository.updateStatus(id, status);
   },
@@ -59,8 +59,8 @@ export const taskService = {
       weekEnd.setHours(23, 59, 59, 999);
 
       const tasks = await taskRepository.getWeeklyTasks(weekStart, weekEnd);
-      const openTasks = tasks.filter((t) => t.status === 'IN_PROGRESS').length;
-      const completedTasks = tasks.filter((t) => t.status === 'COMPLETED').length;
+      const openTasks = tasks.filter((t: any) => t.status === 'IN_PROGRESS').length;
+      const completedTasks = tasks.filter((t: any) => t.status === 'COMPLETED').length;
 
       weeks.push({
         weekNumber: w + 1,
@@ -68,11 +68,15 @@ export const taskService = {
         weekEnd: weekEnd.toISOString(),
         openTasks,
         completedTasks,
-        tasks: tasks.map((t) => ({
-          ...t,
+        tasks: tasks.map((t: any) => ({
+          title: t.title,
+          description: t.description || '',
           dueDate: t.dueDate.toISOString(),
+          priority: t.priority,
+          status: t.status,
           createdAt: t.createdAt.toISOString(),
           updatedAt: t.updatedAt.toISOString(),
+          id: t._id.toString(),
         })),
       });
     }

@@ -1,95 +1,69 @@
-import { PrismaClient, Priority, Status } from '@prisma/client';
-import { CreateTaskInput, UpdateTaskInput } from '@todo/types';
-
-let prisma: PrismaClient | null = null;
-
-const getPrismaClient = () => {
-  if (!prisma) {
-    prisma = new PrismaClient();
-  }
-  return prisma;
-};
+import { Task, TaskStatus, TaskPriority } from '../models/Task.js';
+import type { CreateTaskInput, UpdateTaskInput } from '@todo/types';
 
 export const taskRepository = {
-  async findAll(skip = 0, take = 50, status?: Status) {
-    const where = status ? { status } : {};
-    return getPrismaClient().task.findMany({
-      where,
-      skip,
-      take,
-      orderBy: { dueDate: 'asc' },
-    });
+  async findAll(skip: number = 0, take: number = 50, status?: TaskStatus) {
+    const query = status ? { status } : {};
+    return Task.find(query)
+      .sort({ dueDate: 1 })
+      .skip(skip)
+      .limit(take)
+      .lean();
   },
 
   async findById(id: string) {
-    return getPrismaClient().task.findUnique({
-      where: { id },
-    });
+    return Task.findById(id).lean();
   },
 
   async create(data: CreateTaskInput) {
-    return getPrismaClient().task.create({
-      data: {
-        title: data.title,
-        description: data.description,
-        dueDate: new Date(data.dueDate),
-        priority: data.priority as Priority,
-        status: data.status as Status,
-      },
+    const task = new Task({
+      title: data.title,
+      description: data.description || '',
+      dueDate: data.dueDate,
+      priority: data.priority || TaskPriority.MEDIUM,
+      status: TaskStatus.IN_PROGRESS,
     });
+    return task.save();
   },
 
   async update(id: string, data: UpdateTaskInput) {
-    return getPrismaClient().task.update({
-      where: { id },
-      data: {
-        ...(data.title && { title: data.title }),
-        ...(data.description !== undefined && { description: data.description }),
-        ...(data.dueDate && { dueDate: new Date(data.dueDate) }),
-        ...(data.priority && { priority: data.priority as Priority }),
-        ...(data.status && { status: data.status as Status }),
-      },
-    });
+    return Task.findByIdAndUpdate(id, data, { new: true }).lean();
   },
 
-  async updateStatus(id: string, status: Status) {
-    return getPrismaClient().task.update({
-      where: { id },
-      data: { status },
-    });
+  async updateStatus(id: string, status: TaskStatus) {
+    return Task.findByIdAndUpdate(id, { status }, { new: true }).lean();
   },
 
   async delete(id: string) {
-    return getPrismaClient().task.delete({
-      where: { id },
-    });
+    return Task.findByIdAndDelete(id);
   },
 
   async search(query: string) {
-    return getPrismaClient().task.findMany({
-      where: {
-        OR: [
-          { title: { contains: query, mode: 'insensitive' } },
-          { description: { contains: query, mode: 'insensitive' } },
-        ],
-      },
-      orderBy: { dueDate: 'asc' },
-    });
+    if (!query || query.trim().length === 0) {
+      return [];
+    }
+
+    return Task.find(
+      { $text: { $search: query } },
+      { score: { $meta: 'textScore' } }
+    )
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(20)
+      .lean();
   },
 
   async countAll() {
-    return getPrismaClient().task.count();
+    return Task.countDocuments();
   },
 
   async getWeeklyTasks(weekStart: Date, weekEnd: Date) {
-    return getPrismaClient().task.findMany({
-      where: {
-        dueDate: {
-          gte: weekStart,
-          lte: weekEnd,
-        },
+    return Task.find({
+      dueDate: {
+        $gte: weekStart,
+        $lte: weekEnd,
       },
-      orderBy: { dueDate: 'asc' },
-    });
+    })
+      .sort({ dueDate: 1 })
+      .lean();
   },
 };

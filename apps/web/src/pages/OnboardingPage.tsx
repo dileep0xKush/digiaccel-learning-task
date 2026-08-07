@@ -47,7 +47,7 @@ export default function OnboardingPage() {
 
         <Button
           onClick={() => navigate('/home')}
-          className="w-full py-3 text-lg font-semibold"
+          className="w-full font-semibold"
           variant="primary"
           size="lg"
         >
