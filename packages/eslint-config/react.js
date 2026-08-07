@@ -1,11 +1,28 @@
-const base = require('./base.js');
-const reactPlugin = require('eslint-plugin-react');
-const reactHooksPlugin = require('eslint-plugin-react-hooks');
+import base from './base.js';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
 
-module.exports = [
+export default [
   ...base,
   {
-    files: ['**/*.tsx'],
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      globals: {
+        React: 'readonly',
+        document: 'readonly',
+        window: 'readonly',
+        navigator: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        URLSearchParams: 'readonly',
+        confirm: 'readonly',
+        alert: 'readonly',
+      },
+    },
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,

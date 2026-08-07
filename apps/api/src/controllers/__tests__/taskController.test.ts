@@ -1,10 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from '@jest/globals';
 import type { Request, Response } from 'express';
-import * as taskController from '../taskController';
 
 describe('Task Controller', () => {
   let mockRequest: Partial<Request>;
-  let mockResponse: Partial<Response>;
+  let _mockResponse: Partial<Response>;
 
   beforeEach(() => {
     mockRequest = {
@@ -13,7 +12,7 @@ describe('Task Controller', () => {
       query: {},
     };
 
-    mockResponse = {
+    _mockResponse = {
       status: vi.fn().mockReturnThis(),
       json: vi.fn().mockReturnThis(),
       send: vi.fn().mockReturnThis(),

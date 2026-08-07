@@ -1,8 +1,8 @@
-const js = require('@eslint/js');
-const ts = require('@typescript-eslint/eslint-plugin');
-const tsParser = require('@typescript-eslint/parser');
+import js from '@eslint/js';
+import ts from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 
-module.exports = [
+export default [
   {
     ignores: ['node_modules/**', 'dist/**', 'build/**', '.turbo/**'],
   },

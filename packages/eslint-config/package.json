@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Shared ESLint configuration",
   "private": true,
+  "type": "module",
   "files": [
     "base.js",
     "react.js",

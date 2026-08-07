@@ -13,6 +13,7 @@ export const taskController = {
 
     res.json({
       success: true,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       data: tasks.map((t: any) => ({
         title: t.title,
         description: t.description || '',
@@ -52,6 +53,7 @@ export const taskController = {
         status: task.status,
         createdAt: task.createdAt.toISOString(),
         updatedAt: task.updatedAt.toISOString(),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         id: (task as any)._id?.toString() || task.id,
       },
     });
@@ -70,6 +72,7 @@ export const taskController = {
         status: task.status,
         createdAt: task.createdAt.toISOString(),
         updatedAt: task.updatedAt.toISOString(),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         id: (task as any)._id?.toString() || task.id,
       },
     });
@@ -97,6 +100,7 @@ export const taskController = {
         status: task.status,
         createdAt: task.createdAt.toISOString(),
         updatedAt: task.updatedAt.toISOString(),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         id: (task as any)._id?.toString() || task.id,
       },
     });
@@ -125,6 +129,7 @@ export const taskController = {
         status: task.status,
         createdAt: task.createdAt.toISOString(),
         updatedAt: task.updatedAt.toISOString(),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         id: (task as any)._id?.toString() || task.id,
       },
     });
@@ -154,6 +159,7 @@ export const taskController = {
 
     return res.json({
       success: true,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       data: tasks.map((t: any) => ({
         title: t.title,
         description: t.description || '',

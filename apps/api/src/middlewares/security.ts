@@ -64,6 +64,7 @@ export const sanitizeInput = (req: Request, _res: Response, next: NextFunction) 
 
 // Error handling middleware
 export const errorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const status = (err as any).status || 500;
   const message = process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message;
 

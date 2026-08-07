@@ -11,6 +11,7 @@ export const taskService = {
     const task = await taskRepository.findById(id);
     if (!task) {
       const error = new Error('Task not found');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (error as any).statusCode = 404;
       throw error;
     }
@@ -59,7 +60,9 @@ export const taskService = {
       weekEnd.setHours(23, 59, 59, 999);
 
       const tasks = await taskRepository.getWeeklyTasks(weekStart, weekEnd);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const openTasks = tasks.filter((t: any) => t.status === 'IN_PROGRESS').length;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const completedTasks = tasks.filter((t: any) => t.status === 'COMPLETED').length;
 
       weeks.push({
@@ -68,6 +71,7 @@ export const taskService = {
         weekEnd: weekEnd.toISOString(),
         openTasks,
         completedTasks,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         tasks: tasks.map((t: any) => ({
           title: t.title,
           description: t.description || '',
