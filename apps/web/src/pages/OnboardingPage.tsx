@@ -54,9 +54,7 @@ export default function OnboardingPage() {
           Get Started
         </Button>
 
-        <p className="text-sm text-gray-600">
-          No sign-up required. All data stored locally.
-        </p>
+        <p className="text-sm text-gray-600">No sign-up required. All data stored locally.</p>
       </div>
     </div>
   );

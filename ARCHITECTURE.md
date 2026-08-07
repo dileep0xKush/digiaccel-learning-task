@@ -53,6 +53,7 @@ Database (PostgreSQL)
 ### Layer Responsibilities
 
 #### Controllers (`controllers/`)
+
 - Handle HTTP requests/responses
 - Parse query parameters and body
 - Call services with validated input
@@ -60,6 +61,7 @@ Database (PostgreSQL)
 - Should NOT contain business logic
 
 Example:
+
 ```typescript
 async getAllTasks(req: Request, res: Response) {
   const tasks = await taskService.getAllTasks();
@@ -68,6 +70,7 @@ async getAllTasks(req: Request, res: Response) {
 ```
 
 #### Services (`services/`)
+
 - Contain business logic
 - Orchestrate between controllers and repositories
 - Perform calculations and transformations
@@ -75,6 +78,7 @@ async getAllTasks(req: Request, res: Response) {
 - Should NOT interact directly with HTTP
 
 Example:
+
 ```typescript
 async createTask(data: CreateTaskInput) {
   // Validation, business rules
@@ -83,6 +87,7 @@ async createTask(data: CreateTaskInput) {
 ```
 
 #### Repositories (`repositories/`)
+
 - Abstract database operations
 - Execute queries using Prisma
 - Return raw data from database
@@ -90,6 +95,7 @@ async createTask(data: CreateTaskInput) {
 - Easy to mock for testing
 
 Example:
+
 ```typescript
 async findById(id: string) {
   return prisma.task.findUnique({ where: { id } });
@@ -97,12 +103,14 @@ async findById(id: string) {
 ```
 
 #### Validators (`validators/`)
+
 - Validate incoming data with Zod
 - Run on middleware
 - Convert runtime types
 - Ensure type safety
 
 Example:
+
 ```typescript
 export const validateCreateTask = (req, res, next) => {
   req.body = CreateTaskSchema.parse(req.body);
@@ -149,6 +157,7 @@ try {
 ```
 
 Benefits:
+
 - Consistent error format across all endpoints
 - Proper HTTP status codes
 - Detailed error messages in development
@@ -185,12 +194,14 @@ config/         → Application configuration
 #### Smart vs Dumb Components
 
 **Smart Components** (Pages, Containers)
+
 - Connect to React Query hooks
 - Manage complex state
 - Handle side effects
 - Compose UI components
 
 Example:
+
 ```typescript
 export default function HomePage() {
   const { data: weeks } = useWeeklyTasks();
@@ -200,12 +211,14 @@ export default function HomePage() {
 ```
 
 **Dumb Components** (UI, Presentational)
+
 - Receive data via props
 - Render UI
 - Handle simple interactions
 - Reusable across pages
 
 Example:
+
 ```typescript
 interface TaskItemProps {
   task: Task;
@@ -219,34 +232,40 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
 ### State Management
 
 **React Query** (Server state)
+
 - API data fetching
 - Caching
 - Automatic refetching
 - Loading/error states
 
 Example:
+
 ```typescript
 const { data, isLoading, error } = useWeeklyTasks();
 ```
 
 **React Hook Form** (Form state)
+
 - Form validation
 - Input binding
 - Error handling
 - Submission
 
 Example:
+
 ```typescript
 const { register, handleSubmit } = useForm();
 <input {...register('title')} />
 ```
 
 **Local React State** (UI state)
+
 - Toggle modals/dropdowns
 - Track active filters
 - Temporary UI state
 
 Example:
+
 ```typescript
 const [isOpen, setIsOpen] = useState(false);
 ```
@@ -294,6 +313,7 @@ Task
 ### Schema Evolution
 
 Migrations track all schema changes:
+
 1. Edit `schema.prisma`
 2. Run `npm run db:migrate:dev`
 3. Review migration
@@ -423,12 +443,14 @@ Consistent response structure:
 ## Security Considerations
 
 ### Frontend
+
 - **Input validation** with Zod
 - **XSS protection** via React escaping
 - **CSRF tokens** if needed
 - **Secure storage** of auth tokens
 
 ### Backend
+
 - **Input validation** with Zod before processing
 - **SQL injection prevention** via Prisma ORM
 - **CORS configuration** for allowed origins
@@ -437,6 +459,7 @@ Consistent response structure:
 - **HTTPS enforcement** in production
 
 ### Database
+
 - **Connection encryption** in transit
 - **Prepared statements** via Prisma
 - **Principle of least privilege** for DB user
@@ -471,27 +494,32 @@ GitHub Repository
 ## SOLID Principles
 
 ### Single Responsibility Principle
+
 - Controllers handle HTTP only
 - Services handle business logic
 - Repositories handle data access
 - Validators handle input validation
 
 ### Open/Closed Principle
+
 - Easily extend with new endpoints
 - Add new services without modifying existing
 - New components without affecting current ones
 
 ### Liskov Substitution Principle
+
 - All repositories implement same interface
 - Easy to mock for testing
 - Can swap implementations
 
 ### Interface Segregation Principle
+
 - Specific props interfaces for components
 - Specific query parameters for endpoints
 - Narrow service method signatures
 
 ### Dependency Inversion Principle
+
 - Services depend on abstractions (repositories)
 - Components depend on hook interfaces
 - Not tightly coupled to implementations
@@ -499,16 +527,19 @@ GitHub Repository
 ## Testing Strategy
 
 ### Unit Tests
+
 - Service logic
 - Utility functions
 - Custom hooks
 
 ### Integration Tests
+
 - API endpoints
 - Database operations
 - Form submissions
 
 ### E2E Tests
+
 - Complete user flows
 - Cross-browser testing
 - Production simulation
@@ -516,17 +547,20 @@ GitHub Repository
 ## Monitoring & Observability
 
 ### Logging
+
 - Morgan for HTTP request logging
 - Structured logs in production
 - Error tracking (Sentry optional)
 
 ### Metrics
+
 - API response times
 - Database query performance
 - Frontend bundle size
 - User engagement
 
 ### Alerts
+
 - Failed deployments
 - Error rate spikes
 - Performance degradation
@@ -535,23 +569,27 @@ GitHub Repository
 ## Future Enhancements
 
 ### Authentication
+
 - Add user accounts
 - JWT tokens
 - Session management
 - Role-based access control
 
 ### Real-time Features
+
 - WebSocket for live updates
 - Collaborative editing
 - Notifications
 
 ### Advanced Queries
+
 - Full-text search
 - Advanced filtering
 - Sorting options
 - Export to CSV/PDF
 
 ### Performance
+
 - Database connection pooling
 - Query optimization
 - Caching layer (Redis)
@@ -560,6 +598,7 @@ GitHub Repository
 ## Conclusion
 
 This architecture provides:
+
 - ✅ Clear separation of concerns
 - ✅ Type safety across the stack
 - ✅ Easy to understand and maintain

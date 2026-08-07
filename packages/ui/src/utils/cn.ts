@@ -4,7 +4,7 @@ export function cn(...classes: (string | undefined | null | false)[]): string {
 
   const classMap = new Map<string, string>();
 
-  parts.forEach(cls => {
+  parts.forEach((cls) => {
     const match = cls.match(/^([a-z-]+)/);
     if (match) {
       const prefix = match[1];

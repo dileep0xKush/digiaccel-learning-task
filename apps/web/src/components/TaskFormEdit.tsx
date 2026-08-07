@@ -90,7 +90,9 @@ export default function TaskFormEdit({ task, onSuccess }: TaskFormEditProps) {
                 className="border-2 border-gray-200 focus:border-blue-500 min-h-32"
                 {...register('description')}
               />
-              {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
+              {errors.description && (
+                <p className="text-red-500 text-sm">{errors.description.message}</p>
+              )}
             </div>
 
             {/* Two Column Layout for Date and Time */}
@@ -122,7 +124,9 @@ export default function TaskFormEdit({ task, onSuccess }: TaskFormEditProps) {
                   <option value="MEDIUM">Medium</option>
                   <option value="HIGH">High</option>
                 </Select>
-                {errors.priority && <p className="text-red-500 text-sm">{errors.priority.message}</p>}
+                {errors.priority && (
+                  <p className="text-red-500 text-sm">{errors.priority.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">

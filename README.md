@@ -5,6 +5,7 @@ A modern, fully-responsive todo management application with task scheduling, wee
 ## ✨ Features
 
 ### Task Management
+
 - ✅ **Create Tasks** - Add tasks with title, description, date/time, and priority
 - ✅ **Edit Tasks** - Update any task attribute
 - ✅ **Delete Tasks** - Remove completed or unwanted tasks
@@ -12,18 +13,21 @@ A modern, fully-responsive todo management application with task scheduling, wee
 - ✅ **Status Tracking** - Mark tasks as In Progress or Completed
 
 ### Weekly Organization
+
 - 📅 **Weekly Cards** - Tasks grouped by week (Monday-Sunday)
 - 📊 **Progress Tracking** - Visual progress bar and completion percentage
 - 🔢 **Task Counts** - See open vs completed tasks per week
 - 🎯 **Quick Stats** - At-a-glance overview of your workload
 
 ### Smart Indicators
+
 - 🔴 **Overdue** - Tasks past their due date are flagged
 - 📍 **Today** - Easy identification of today's tasks
 - ⚡ **Priority Levels** - Low, Medium, High priority badges
 - ✔️ **Completion Status** - Visual feedback for completed tasks
 
 ### Modern UI/UX
+
 - 📱 **Mobile-First Design** - Fully responsive and touch-friendly
 - 🎨 **Modern Aesthetics** - Gradient backgrounds, smooth animations
 - 🌈 **Color-Coded** - Visual hierarchy with status-specific colors
@@ -32,6 +36,7 @@ A modern, fully-responsive todo management application with task scheduling, wee
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **React 19** - UI framework
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Styling
@@ -42,6 +47,7 @@ A modern, fully-responsive todo management application with task scheduling, wee
 - **Lucide React** - Icons
 
 ### Backend
+
 - **Node.js** - Runtime
 - **Express.js** - API framework
 - **TypeScript** - Type safety
@@ -49,6 +55,7 @@ A modern, fully-responsive todo management application with task scheduling, wee
 - **PostgreSQL** - Database
 
 ### DevOps
+
 - **Turbo** - Monorepo management
 - **Docker** - Containerization (optional)
 
@@ -87,6 +94,7 @@ A modern, fully-responsive todo management application with task scheduling, wee
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - npm 9+
 - PostgreSQL 12+
@@ -94,21 +102,24 @@ A modern, fully-responsive todo management application with task scheduling, wee
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd digiaccel-learning-task
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    # Create .env file in root directory
    cp .env.example .env
-   
+
    # Update with your values:
    # DATABASE_URL=postgresql://username:password@localhost:5432/todo_app
    # API_PORT=3002
@@ -116,15 +127,17 @@ A modern, fully-responsive todo management application with task scheduling, wee
    ```
 
 4. **Set up PostgreSQL database**
+
    ```bash
    # Start PostgreSQL service
    sudo service postgresql start
-   
+
    # Run database migrations
    npx prisma migrate deploy
    ```
 
 5. **Start development servers**
+
    ```bash
    npm run dev
    ```
@@ -136,6 +149,7 @@ A modern, fully-responsive todo management application with task scheduling, wee
 ## 📝 Usage
 
 ### Creating a Task
+
 1. Click the floating action button (+ icon)
 2. Fill in task details:
    - **Title** (required)
@@ -145,12 +159,14 @@ A modern, fully-responsive todo management application with task scheduling, wee
 3. Click "Create Task"
 
 ### Managing Tasks
+
 - **Mark as Complete** - Click the checkbox next to a task
 - **Edit Task** - Click the task or edit icon
 - **Delete Task** - Open task details and click delete
 - **Search** - Click search icon and enter keywords
 
 ### Viewing Progress
+
 - Tasks are organized by week
 - Each week shows open and completed task counts
 - Progress bar shows completion percentage
@@ -161,6 +177,7 @@ A modern, fully-responsive todo management application with task scheduling, wee
 ### Base URL: `http://localhost:3002`
 
 #### Tasks
+
 - `GET /api/tasks` - Get all tasks
 - `POST /api/tasks` - Create new task
 - `GET /api/tasks/:id` - Get task by ID
@@ -168,15 +185,18 @@ A modern, fully-responsive todo management application with task scheduling, wee
 - `DELETE /api/tasks/:id` - Delete task
 
 #### Search & Analytics
+
 - `GET /api/tasks/search?q=query` - Search tasks
 - `GET /api/tasks/weeks` - Get weekly task summary
 
 #### Health
+
 - `GET /health` - API health check
 
 ## 🗄️ Database Schema
 
 ### Tasks Table
+
 ```sql
 CREATE TABLE tasks (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -187,7 +207,7 @@ CREATE TABLE tasks (
   status ENUM('IN_PROGRESS', 'COMPLETED') DEFAULT 'IN_PROGRESS',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  
+
   INDEX(due_date),
   INDEX(status),
   INDEX(priority)
@@ -197,9 +217,11 @@ CREATE TABLE tasks (
 ## 🧪 Testing
 
 ### Manual Testing
+
 See `TEST_CHECKLIST.md` for comprehensive testing guide.
 
 ### Running Tests
+
 ```bash
 # Run all tests
 npm run test
@@ -230,6 +252,7 @@ npm run test -- --filter=@todo/web
 ### Deploying to Netlify
 
 1. **Build frontend**
+
    ```bash
    npm run build
    ```
@@ -267,6 +290,7 @@ Created by Claude Code
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
+
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit changes (`git commit -m 'Add amazing feature'`)

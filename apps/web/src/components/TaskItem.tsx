@@ -20,7 +20,8 @@ export default function TaskItem({ task }: TaskItemProps) {
       { id: task.id, status: newStatus },
       {
         onSuccess: () => {
-          const message = newStatus === 'COMPLETED' ? 'Task marked as completed' : 'Task moved to in progress';
+          const message =
+            newStatus === 'COMPLETED' ? 'Task marked as completed' : 'Task moved to in progress';
           toast.success(message);
         },
         onError: () => {
@@ -63,17 +64,21 @@ export default function TaskItem({ task }: TaskItemProps) {
             {task.title}
           </h3>
           {task.description && (
-            <p className={`text-sm line-clamp-2 mt-1 ${
-              task.status === 'COMPLETED' ? 'text-gray-400' : 'text-gray-600'
-            }`}>
+            <p
+              className={`text-sm line-clamp-2 mt-1 ${
+                task.status === 'COMPLETED' ? 'text-gray-400' : 'text-gray-600'
+              }`}
+            >
               {task.description}
             </p>
           )}
 
           <div className="flex flex-wrap items-center gap-3 mt-3">
-            <div className={`flex items-center gap-1 text-sm ${
-              isOverdue ? 'text-red-600 font-semibold' : 'text-gray-600'
-            }`}>
+            <div
+              className={`flex items-center gap-1 text-sm ${
+                isOverdue ? 'text-red-600 font-semibold' : 'text-gray-600'
+              }`}
+            >
               <Clock size={14} />
               {dueDate.toLocaleDateString('en-US', {
                 month: 'short',
@@ -98,13 +103,15 @@ export default function TaskItem({ task }: TaskItemProps) {
           </div>
 
           <div className="flex gap-2 mt-3">
-            <span className={`text-xs font-bold px-2 py-1 rounded-full ${
-              task.priority === 'HIGH'
-                ? 'bg-red-100 text-red-700'
-                : task.priority === 'MEDIUM'
-                ? 'bg-yellow-100 text-yellow-700'
-                : 'bg-green-100 text-green-700'
-            }`}>
+            <span
+              className={`text-xs font-bold px-2 py-1 rounded-full ${
+                task.priority === 'HIGH'
+                  ? 'bg-red-100 text-red-700'
+                  : task.priority === 'MEDIUM'
+                    ? 'bg-yellow-100 text-yellow-700'
+                    : 'bg-green-100 text-green-700'
+              }`}
+            >
               {task.priority}
             </span>
           </div>

@@ -16,12 +16,7 @@ function App() {
         <Route path="/tasks/:id/edit" element={<EditTaskPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <Toaster
-        position="top-right"
-        richColors
-        closeButton
-        duration={3000}
-      />
+      <Toaster position="top-right" richColors closeButton duration={3000} />
     </>
   );
 }

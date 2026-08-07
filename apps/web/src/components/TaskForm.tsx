@@ -88,7 +88,9 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
                   className="border-2 border-gray-200 focus:border-blue-500 py-3 px-4 rounded-lg text-base"
                   {...register('title')}
                 />
-                {errors.title && <p className="text-red-500 text-sm font-medium">{errors.title.message}</p>}
+                {errors.title && (
+                  <p className="text-red-500 text-sm font-medium">{errors.title.message}</p>
+                )}
               </div>
 
               {/* Description Field */}
@@ -102,7 +104,9 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
                   className="border-2 border-gray-200 focus:border-blue-500 py-3 px-4 rounded-lg text-base min-h-28"
                   {...register('description')}
                 />
-                {errors.description && <p className="text-red-500 text-sm font-medium">{errors.description.message}</p>}
+                {errors.description && (
+                  <p className="text-red-500 text-sm font-medium">{errors.description.message}</p>
+                )}
               </div>
 
               {/* Date & Priority Grid */}
@@ -118,7 +122,9 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
                     className="border-2 border-gray-200 focus:border-blue-500 py-3 px-4 rounded-lg text-base"
                     {...register('dueDate')}
                   />
-                  {errors.dueDate && <p className="text-red-500 text-sm font-medium">{errors.dueDate.message}</p>}
+                  {errors.dueDate && (
+                    <p className="text-red-500 text-sm font-medium">{errors.dueDate.message}</p>
+                  )}
                 </div>
 
                 {/* Priority Field */}
@@ -137,7 +143,9 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
                     </option>
                     <option value="HIGH">High</option>
                   </Select>
-                  {errors.priority && <p className="text-red-500 text-sm font-medium">{errors.priority.message}</p>}
+                  {errors.priority && (
+                    <p className="text-red-500 text-sm font-medium">{errors.priority.message}</p>
+                  )}
                 </div>
               </div>
 

@@ -58,9 +58,7 @@ export default function SearchBar() {
               ))}
             </div>
           ) : (
-            <div className="p-4 text-center text-gray-500">
-              No tasks found matching "{query}"
-            </div>
+            <div className="p-4 text-center text-gray-500">No tasks found matching "{query}"</div>
           )}
         </div>
       )}

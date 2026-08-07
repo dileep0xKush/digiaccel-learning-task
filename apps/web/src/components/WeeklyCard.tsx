@@ -59,14 +59,18 @@ export default function WeeklyCard({ week, isExpanded, onToggle }: WeeklyCardPro
             <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200 hover:border-orange-300 transition-colors">
               <div className="flex items-center gap-2 mb-1">
                 <Clock size={16} className="text-orange-600" />
-                <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Open Tasks</p>
+                <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  Open Tasks
+                </p>
               </div>
               <p className="text-3xl font-bold text-orange-600">{week.openTasks}</p>
             </div>
             <div className="bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-4 border border-green-200 hover:border-green-300 transition-colors">
               <div className="flex items-center gap-2 mb-1">
                 <CheckCircle2 size={16} className="text-green-600" />
-                <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Completed</p>
+                <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  Completed
+                </p>
               </div>
               <p className="text-3xl font-bold text-green-600">{week.completedTasks}</p>
             </div>
@@ -84,7 +88,9 @@ export default function WeeklyCard({ week, isExpanded, onToggle }: WeeklyCardPro
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <p className="text-xs text-gray-600 text-right">{week.completedTasks} of {week.openTasks + week.completedTasks} tasks completed</p>
+            <p className="text-xs text-gray-600 text-right">
+              {week.completedTasks} of {week.openTasks + week.completedTasks} tasks completed
+            </p>
           </div>
         </div>
       </CardHeader>

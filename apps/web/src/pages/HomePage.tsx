@@ -101,7 +101,13 @@ export default function HomePage() {
         <Plus size={32} className="group-hover:rotate-90 transition-transform duration-300" />
       </button>
 
-      {isFormOpen && <TaskForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} onSuccess={handleTaskCreated} />}
+      {isFormOpen && (
+        <TaskForm
+          isOpen={isFormOpen}
+          onClose={() => setIsFormOpen(false)}
+          onSuccess={handleTaskCreated}
+        />
+      )}
     </div>
   );
 }

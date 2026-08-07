@@ -36,7 +36,10 @@ export const CreateTaskSchema = z.object({
 export const UpdateTaskSchema = z.object({
   title: z.string().min(1).max(255).optional(),
   description: z.string().optional(),
-  dueDate: z.string().refine((val) => !isNaN(Date.parse(val)), 'Invalid date format').optional(),
+  dueDate: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), 'Invalid date format')
+    .optional(),
   priority: TaskPrioritySchema.optional(),
   status: TaskStatusSchema.optional(),
 });

@@ -4,11 +4,7 @@ import type { CreateTaskInput, UpdateTaskInput } from '@todo/types';
 export const taskRepository = {
   async findAll(skip: number = 0, take: number = 50, status?: TaskStatus) {
     const query = status ? { status } : {};
-    return Task.find(query)
-      .sort({ dueDate: 1 })
-      .skip(skip)
-      .limit(take)
-      .lean();
+    return Task.find(query).sort({ dueDate: 1 }).skip(skip).limit(take).lean();
   },
 
   async findById(id: string) {
@@ -43,10 +39,7 @@ export const taskRepository = {
       return [];
     }
 
-    return Task.find(
-      { $text: { $search: query } },
-      { score: { $meta: 'textScore' } }
-    )
+    return Task.find({ $text: { $search: query } }, { score: { $meta: 'textScore' } })
       .sort({ score: { $meta: 'textScore' } })
       .limit(20)
       .lean();
