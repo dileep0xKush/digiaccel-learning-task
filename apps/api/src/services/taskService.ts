@@ -1,4 +1,4 @@
-import { Task, Status } from '@prisma/client';
+import { Status } from '@prisma/client';
 import { CreateTaskInput, UpdateTaskInput, WeeklyTasks } from '@todo/types';
 import { taskRepository } from '../repositories/taskRepository.js';
 
@@ -43,7 +43,7 @@ export const taskService = {
     return taskRepository.search(query.trim());
   },
 
-  async getWeeklyTasks(weekNumber?: number): Promise<WeeklyTasks[]> {
+  async getWeeklyTasks(_weekNumber?: number): Promise<WeeklyTasks[]> {
     const today = new Date();
     const weeks: WeeklyTasks[] = [];
 

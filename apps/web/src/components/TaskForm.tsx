@@ -24,7 +24,15 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
 
   const onSubmit = async (data: CreateTaskInput) => {
     try {
-      await createTaskMutation.mutateAsync(data);
+      let dueDate = data.dueDate;
+      if (dueDate && !dueDate.includes('T')) {
+        dueDate = `${dueDate}:00`;
+      }
+      const payload = {
+        ...data,
+        dueDate: dueDate ? new Date(dueDate).toISOString() : new Date().toISOString(),
+      };
+      await createTaskMutation.mutateAsync(payload);
       reset();
       onSuccess?.();
     } catch (error) {
@@ -37,14 +45,17 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
   return (
     <>
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-all"
         onClick={onClose}
         aria-hidden="true"
       />
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl p-6 max-h-[90vh] overflow-y-auto">
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-b from-white to-gray-50 rounded-t-3xl p-6 max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Create Task</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900">Create Task</h2>
+            <p className="text-sm text-gray-600 mt-1">Add a new task to your list</p>
+          </div>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-2 transition-colors">
             <X size={24} />
           </button>
         </div>
@@ -79,11 +90,19 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
             <option value="HIGH">High</option>
           </Select>
 
-          <div className="flex gap-2 pt-4">
-            <Button type="submit" variant="primary" className="flex-1" disabled={createTaskMutation.isPending}>
+          <div className="flex gap-3 pt-6">
+            <Button
+              type="submit"
+              className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 rounded-xl transition-all active:scale-95"
+              disabled={createTaskMutation.isPending}
+            >
               {createTaskMutation.isPending ? 'Creating...' : 'Create Task'}
             </Button>
-            <Button type="button" variant="secondary" onClick={onClose} className="flex-1">
+            <Button
+              type="button"
+              onClick={onClose}
+              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 font-semibold py-3 rounded-xl transition-colors"
+            >
               Cancel
             </Button>
           </div>

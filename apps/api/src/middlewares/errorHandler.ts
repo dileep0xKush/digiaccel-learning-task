@@ -8,27 +8,29 @@ interface ApiError extends Error {
 
 export const errorHandler = (
   err: ApiError | ZodError | Error,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   console.error('Error:', err);
 
   if (err instanceof ZodError) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       error: 'Validation error',
       details: err.errors,
     });
+    return;
   }
 
   if (err instanceof Error) {
     const statusCode = (err as ApiError).statusCode || 500;
-    return res.status(statusCode).json({
+    res.status(statusCode).json({
       success: false,
       error: err.message || 'Internal server error',
       ...(config.nodeEnv === 'development' && { stack: err.stack }),
     });
+    return;
   }
 
   res.status(500).json({

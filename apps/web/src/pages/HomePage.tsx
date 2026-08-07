@@ -28,9 +28,14 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="sticky top-0 bg-white shadow-sm z-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 pb-20">
+      {/* Header */}
+      <div className="sticky top-0 bg-white/80 backdrop-blur-md shadow-sm z-10 border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-4 py-4">
+          <div className="mb-4">
+            <h1 className="text-2xl font-bold text-gray-900">My Tasks</h1>
+            <p className="text-sm text-gray-600">Stay organized and track your progress</p>
+          </div>
           <div className="flex gap-2">
             <div className="flex-1">
               <SearchBar />
@@ -39,7 +44,7 @@ export default function HomePage() {
               onClick={() => navigate('/search')}
               variant="ghost"
               size="md"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 hover:bg-gray-100"
             >
               <Search size={20} />
             </Button>
@@ -47,14 +52,23 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="max-w-4xl mx-auto px-4 py-8">
         {isLoading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full w-8 h-8 border-b-2 border-blue-600" />
           </div>
         ) : !weeks || weeks.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 mb-4">No tasks yet. Create one to get started!</p>
+          <div className="text-center py-16">
+            <div className="mb-4 text-5xl">📋</div>
+            <p className="text-lg font-semibold text-gray-700 mb-2">No tasks yet</p>
+            <p className="text-gray-500 mb-6">Create your first task to get started!</p>
+            <Button
+              onClick={() => setIsFormOpen(true)}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+            >
+              <Plus size={20} />
+              Create Task
+            </Button>
           </div>
         ) : (
           <div className="space-y-4">
@@ -70,12 +84,14 @@ export default function HomePage() {
         )}
       </div>
 
+      {/* Floating Action Button */}
       <button
         onClick={() => setIsFormOpen(true)}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition-colors"
+        className="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 active:scale-95"
         aria-label="Add task"
+        title="Add new task"
       >
-        <Plus size={24} />
+        <Plus size={28} />
       </button>
 
       {isFormOpen && <TaskForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} onSuccess={handleTaskCreated} />}

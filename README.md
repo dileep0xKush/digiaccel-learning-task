@@ -1,298 +1,282 @@
-# 📝 Todo App - Full Stack Application
+# 📋 Todo List App
 
-A production-ready full-stack To-Do List application built with modern technologies and best practices.
+A modern, fully-responsive todo management application with task scheduling, weekly organization, and real-time progress tracking.
 
-## 🏗️ Architecture
+## ✨ Features
 
-This is a **Turborepo monorepo** with npm workspaces containing:
+### Task Management
+- ✅ **Create Tasks** - Add tasks with title, description, date/time, and priority
+- ✅ **Edit Tasks** - Update any task attribute
+- ✅ **Delete Tasks** - Remove completed or unwanted tasks
+- ✅ **Search Tasks** - Find tasks by keyword
+- ✅ **Status Tracking** - Mark tasks as In Progress or Completed
 
-- **Frontend**: React 19 + Vite + TypeScript
-- **Backend**: Express.js + Node.js + TypeScript  
-- **Database**: PostgreSQL with Prisma ORM
-- **Shared**: Types, UI components, ESLint configs, TypeScript configs
+### Weekly Organization
+- 📅 **Weekly Cards** - Tasks grouped by week (Monday-Sunday)
+- 📊 **Progress Tracking** - Visual progress bar and completion percentage
+- 🔢 **Task Counts** - See open vs completed tasks per week
+- 🎯 **Quick Stats** - At-a-glance overview of your workload
 
-## 🚀 Quick Start
+### Smart Indicators
+- 🔴 **Overdue** - Tasks past their due date are flagged
+- 📍 **Today** - Easy identification of today's tasks
+- ⚡ **Priority Levels** - Low, Medium, High priority badges
+- ✔️ **Completion Status** - Visual feedback for completed tasks
 
-### Prerequisites
-- Node.js 18+
-- npm 9+
-- PostgreSQL 14+ (or use Docker)
+### Modern UI/UX
+- 📱 **Mobile-First Design** - Fully responsive and touch-friendly
+- 🎨 **Modern Aesthetics** - Gradient backgrounds, smooth animations
+- 🌈 **Color-Coded** - Visual hierarchy with status-specific colors
+- ⚡ **Smooth Interactions** - Fluid animations and transitions
 
-### Installation
+## 🛠️ Tech Stack
 
-```bash
-# Install all dependencies
-npm install
-```
+### Frontend
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Vite** - Build tool
+- **React Query** - State management
+- **React Hook Form** - Form handling
+- **Zod** - Schema validation
+- **Lucide React** - Icons
 
-### Development
+### Backend
+- **Node.js** - Runtime
+- **Express.js** - API framework
+- **TypeScript** - Type safety
+- **Prisma ORM** - Database management
+- **PostgreSQL** - Database
 
-```bash
-# Start both frontend and backend in development mode
-npm run dev
-
-# Frontend: http://localhost:5173
-# Backend: http://localhost:3001
-```
-
-### Build
-
-```bash
-# Build all packages
-npm run build
-
-# Production start
-npm run start
-```
+### DevOps
+- **Turbo** - Monorepo management
+- **Docker** - Containerization (optional)
 
 ## 📦 Project Structure
 
 ```
-todo-app/
 ├── apps/
-│   ├── api/              # Express backend
-│   │   └── src/
-│   │       ├── controllers/
-│   │       ├── services/
-│   │       ├── repositories/
-│   │       ├── routes/
-│   │       ├── middlewares/
-│   │       └── validators/
-│   └── web/              # React frontend
-│       └── src/
-│           ├── pages/
-│           ├── components/
-│           ├── hooks/
-│           ├── config/
-│           └── types/
+│   ├── api/                 # Express backend
+│   │   ├── src/
+│   │   │   ├── controllers/
+│   │   │   ├── services/
+│   │   │   ├── repositories/
+│   │   │   ├── routes/
+│   │   │   ├── middlewares/
+│   │   │   └── config/
+│   │   └── package.json
+│   └── web/                 # React frontend
+│       ├── src/
+│       │   ├── pages/
+│       │   ├── components/
+│       │   ├── hooks/
+│       │   ├── config/
+│       │   └── main.tsx
+│       └── package.json
 ├── packages/
-│   ├── types/            # Shared TypeScript types
-│   ├── ui/               # Shared UI components
-│   ├── eslint-config/    # ESLint rules
-│   └── tsconfig/         # TypeScript configs
-├── prisma/               # Database schema & migrations
-│   └── schema.prisma
-└── turbo.json            # Turborepo configuration
+│   ├── types/              # Shared TypeScript types
+│   ├── ui/                 # Shared UI components
+│   ├── tsconfig/           # Shared TypeScript config
+│   └── eslint-config/      # Shared ESLint config
+├── prisma/
+│   ├── schema.prisma       # Database schema
+│   └── migrations/         # Database migrations
+└── package.json
 ```
 
-## 🗄️ Database Setup
+## 🚀 Getting Started
 
-### Environment Variables
+### Prerequisites
+- Node.js 18+
+- npm 9+
+- PostgreSQL 12+
 
-Create `.env` file in the root directory:
+### Installation
 
-```env
-# Database
-DATABASE_URL=postgresql://user:password@localhost:5432/todo_app_dev
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd digiaccel-learning-task
+   ```
 
-# Backend
-NODE_ENV=development
-API_PORT=3001
-API_HOST=http://localhost:3001
-CORS_ORIGIN=http://localhost:5173
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-# Frontend
-VITE_API_URL=http://localhost:3001
-```
+3. **Set up environment variables**
+   ```bash
+   # Create .env file in root directory
+   cp .env.example .env
+   
+   # Update with your values:
+   # DATABASE_URL=postgresql://username:password@localhost:5432/todo_app
+   # API_PORT=3002
+   # VITE_API_URL=http://localhost:3002
+   ```
 
-### Database Migrations
+4. **Set up PostgreSQL database**
+   ```bash
+   # Start PostgreSQL service
+   sudo service postgresql start
+   
+   # Run database migrations
+   npx prisma migrate deploy
+   ```
 
-```bash
-# Run migrations
-npm run db:migrate
+5. **Start development servers**
+   ```bash
+   npm run dev
+   ```
 
-# Seed sample data
-npm run db:seed
-```
+   This will start:
+   - Frontend: http://localhost:5176
+   - API: http://localhost:3002
 
-### Using Docker PostgreSQL
+## 📝 Usage
 
-```bash
-# Start PostgreSQL via Docker
-docker run --name todo-db \
-  -e POSTGRES_USER=todouser \
-  -e POSTGRES_PASSWORD=todopass \
-  -e POSTGRES_DB=todo_app \
-  -p 5432:5432 \
-  postgres:16-alpine
+### Creating a Task
+1. Click the floating action button (+ icon)
+2. Fill in task details:
+   - **Title** (required)
+   - **Description** (optional)
+   - **Date & Time** (required)
+   - **Priority** (Low, Medium, High)
+3. Click "Create Task"
 
-# Update DATABASE_URL in .env
-DATABASE_URL=postgresql://todouser:todopass@localhost:5432/todo_app
-```
+### Managing Tasks
+- **Mark as Complete** - Click the checkbox next to a task
+- **Edit Task** - Click the task or edit icon
+- **Delete Task** - Open task details and click delete
+- **Search** - Click search icon and enter keywords
+
+### Viewing Progress
+- Tasks are organized by week
+- Each week shows open and completed task counts
+- Progress bar shows completion percentage
+- Click week card to expand/collapse tasks
 
 ## 🔌 API Endpoints
 
-### Tasks
-- `GET /api/tasks` - Get all tasks (with pagination)
-- `GET /api/tasks/:id` - Get single task
-- `POST /api/tasks` - Create task
+### Base URL: `http://localhost:3002`
+
+#### Tasks
+- `GET /api/tasks` - Get all tasks
+- `POST /api/tasks` - Create new task
+- `GET /api/tasks/:id` - Get task by ID
 - `PATCH /api/tasks/:id` - Update task
-- `PATCH /api/tasks/:id/status` - Toggle task status
 - `DELETE /api/tasks/:id` - Delete task
-- `GET /api/tasks/search?q=` - Search tasks
-- `GET /api/tasks/weeks` - Get weekly grouped tasks
 
-### Health
-- `GET /health` - Health check endpoint
-- `GET /` - API info
+#### Search & Analytics
+- `GET /api/tasks/search?q=query` - Search tasks
+- `GET /api/tasks/weeks` - Get weekly task summary
 
-## 🎨 Features
+#### Health
+- `GET /health` - API health check
 
-### Frontend
-- ✅ Responsive mobile-first design
-- ✅ Weekly task grouping with progress tracking
-- ✅ Search with debounce
-- ✅ Task filtering by status and priority
-- ✅ Real-time UI updates with optimistic rendering
-- ✅ Toast notifications
-- ✅ Loading and error states
-- ✅ Dark mode ready (Tailwind CSS)
+## 🗄️ Database Schema
 
-### Backend
-- ✅ REST API with Express
-- ✅ Input validation with Zod
-- ✅ Error handling middleware
-- ✅ CORS support
-- ✅ Request logging with Morgan
-- ✅ Security headers with Helmet
-- ✅ Pagination support
-- ✅ Health check endpoint
-
-### Database
-- ✅ PostgreSQL with Prisma ORM
-- ✅ Automated migrations
-- ✅ Seed data for testing
-- ✅ Indexes for performance
-- ✅ UUID primary keys
-
-## 🧪 Testing & Quality
-
-```bash
-# Type checking
-npm run typecheck
-
-# Linting
-npm run lint
-
-# Format code
-npm run format
-npm run format:check
-
-# Clean build artifacts
-npm run clean
+### Tasks Table
+```sql
+CREATE TABLE tasks (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title VARCHAR(255) NOT NULL,
+  description TEXT DEFAULT '',
+  due_date TIMESTAMP NOT NULL,
+  priority ENUM('LOW', 'MEDIUM', 'HIGH') DEFAULT 'MEDIUM',
+  status ENUM('IN_PROGRESS', 'COMPLETED') DEFAULT 'IN_PROGRESS',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  
+  INDEX(due_date),
+  INDEX(status),
+  INDEX(priority)
+);
 ```
 
-## 🐳 Docker
+## 🧪 Testing
 
-### Build & Run with Docker Compose
+### Manual Testing
+See `TEST_CHECKLIST.md` for comprehensive testing guide.
 
+### Running Tests
 ```bash
-docker-compose up -d
+# Run all tests
+npm run test
 
-# Frontend: http://localhost:5173
-# Backend: http://localhost:3001
-# PostgreSQL: localhost:5432
+# Run specific package tests
+npm run test -- --filter=@todo/api
+npm run test -- --filter=@todo/web
 ```
 
-### Build Docker Image
+## 📊 Performance Optimizations
 
-```bash
-docker build -t todo-app:latest .
-docker run -p 3001:3001 -e DATABASE_URL=postgresql://... todo-app:latest
-```
-
-## 📈 Performance Optimizations
-
-- ✅ React Query for efficient data fetching
-- ✅ Debounced search queries
-- ✅ Pagination for large datasets
-- ✅ Database indexes on frequently queried fields
+- ✅ Lazy loading of routes
+- ✅ Code splitting with Vite
+- ✅ Efficient database queries with Prisma
 - ✅ Optimistic UI updates
-- ✅ Tree-shaking with Vite
-- ✅ Code splitting by route
+- ✅ Minimal re-renders with React Query
 
-## 🔐 Security
+## 🔒 Security Features
 
-- ✅ CORS configured
-- ✅ Security headers (Helmet)
+- ✅ CORS protection
+- ✅ Helmet security headers
 - ✅ Input validation with Zod
-- ✅ SQL injection prevention (Prisma ORM)
-- ✅ XSS protection
-- ✅ Strict TypeScript
+- ✅ Type safety with TypeScript
+- ✅ Environment variable isolation
 
-## 📝 Type Safety
+## 🚢 Deployment
 
-- ✅ Strict TypeScript configuration
-- ✅ Shared types between frontend and backend
-- ✅ Zod schemas for runtime validation
-- ✅ Type-safe React hooks
-- ✅ Type-safe API responses
+### Deploying to Netlify
 
-## 🚀 Deployment
+1. **Build frontend**
+   ```bash
+   npm run build
+   ```
 
-### Netlify (Frontend)
+2. **Connect to Netlify**
+   - Push code to GitHub
+   - Connect repository to Netlify
+   - Set build command: `npm run build`
+   - Set publish directory: `apps/web/dist`
 
-```bash
-# Build
-npm run build
+3. **Deploy backend** (Heroku/Railway)
+   - Push code to version control
+   - Connect to deployment platform
+   - Set environment variables
+   - Deploy
 
-# Deploy apps/web/dist to Netlify
-```
+## 📈 Future Enhancements
 
-Netlify configuration file should redirect API calls to backend.
-
-### Render (Backend)
-
-```bash
-# Create new Web Service on Render
-# Connect GitHub repository
-# Set environment variables
-# Deploy automatically on push
-```
-
-### Neon PostgreSQL
-
-1. Create account at [neon.tech](https://neon.tech)
-2. Create new project
-3. Copy connection string
-4. Set `DATABASE_URL` environment variable
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
-
-## 📚 Stack Details
-
-### Frontend Stack
-- **React 19** - UI library
-- **Vite** - Build tool & dev server
-- **TypeScript** - Type safety
-- **React Router v7** - Routing
-- **React Query** - Data fetching
-- **React Hook Form** - Form management
-- **Zod** - Schema validation
-- **TailwindCSS** - Styling
-- **Lucide React** - Icons
-
-### Backend Stack
-- **Express.js** - Web framework
-- **TypeScript** - Type safety
-- **Prisma** - ORM
-- **PostgreSQL** - Database
-- **Zod** - Schema validation
-- **Morgan** - HTTP logging
-- **Helmet** - Security headers
-- **CORS** - Cross-origin requests
-
-## 🤝 Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Run tests and linting
-4. Submit a pull request
+- 🔔 Push notifications for due tasks
+- 👥 Collaborative task sharing
+- 📱 Native mobile apps (React Native)
+- 🤖 AI-powered task suggestions
+- 📊 Advanced analytics dashboard
+- 🎨 Custom themes
+- 🔐 Two-factor authentication
 
 ## 📄 License
 
-MIT
+MIT License - See LICENSE file for details
 
-## 📞 Support
+## 👤 Author
 
-For issues or questions, please open a GitHub issue.
+Created by Claude Code
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+## 📧 Support
+
+For issues and questions, please open an issue on GitHub.
+
+---
+
+**Happy Task Managing! 🎯**

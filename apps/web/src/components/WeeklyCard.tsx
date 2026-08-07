@@ -1,6 +1,6 @@
 import { WeeklyTasks } from '@todo/types';
 import TaskItem from './TaskItem.js';
-import { Card, CardContent, CardHeader, CardTitle, Badge } from '@todo/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@todo/ui';
 import { ChevronDown } from 'lucide-react';
 
 interface WeeklyCardProps {
@@ -25,36 +25,48 @@ export default function WeeklyCard({ week, isExpanded, onToggle }: WeeklyCardPro
       : 0;
 
   return (
-    <Card>
+    <Card className="border-0 shadow-md hover:shadow-lg transition-all duration-200 bg-white/95 backdrop-blur-sm">
       <CardHeader
-        className="cursor-pointer hover:bg-gray-50 transition-colors"
+        className="cursor-pointer hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 transition-colors"
         onClick={onToggle}
       >
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <CardTitle className="text-lg">
-              Week {week.weekNumber} • {startDate} - {endDate}
+            <CardTitle className="text-lg font-bold text-gray-900">
+              Week {week.weekNumber}
             </CardTitle>
+            <p className="text-sm text-gray-500 mt-1">{startDate} - {endDate}</p>
           </div>
           <ChevronDown
-            size={20}
-            className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+            size={24}
+            className={`transform transition-transform text-blue-600 ${isExpanded ? 'rotate-180' : ''}`}
           />
         </div>
 
-        <div className="mt-4 space-y-2">
-          <div className="flex gap-2">
-            <Badge variant="default">{week.openTasks} Open</Badge>
-            <Badge variant="success">{week.completedTasks} Done</Badge>
+        <div className="mt-6 space-y-4">
+          <div className="flex gap-3">
+            <div className="flex-1 bg-gradient-to-br from-orange-50 to-red-50 rounded-lg p-3 border border-orange-100">
+              <p className="text-xs text-gray-600 font-medium">Open Tasks</p>
+              <p className="text-2xl font-bold text-orange-600">{week.openTasks}</p>
+            </div>
+            <div className="flex-1 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-3 border border-green-100">
+              <p className="text-xs text-gray-600 font-medium">Completed</p>
+              <p className="text-2xl font-bold text-green-600">{week.completedTasks}</p>
+            </div>
           </div>
 
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div
-              className="bg-green-500 h-2 rounded-full transition-all"
-              style={{ width: `${progressPercent}%` }}
-            />
+          <div className="space-y-2">
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div
+                className="bg-gradient-to-r from-green-400 to-emerald-500 h-3 rounded-full transition-all duration-300"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-gray-700">{progressPercent}% Complete</p>
+              <p className="text-xs text-gray-500">{week.completedTasks} of {week.openTasks + week.completedTasks}</p>
+            </div>
           </div>
-          <p className="text-sm text-gray-600">{progressPercent}% Complete</p>
         </div>
       </CardHeader>
 

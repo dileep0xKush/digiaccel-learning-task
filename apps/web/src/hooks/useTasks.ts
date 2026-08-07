@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { CreateTaskInput, UpdateTaskInput, Task, WeeklyTasks } from '@todo/types';
+import { CreateTaskInput, UpdateTaskInput, WeeklyTasks } from '@todo/types';
 import { api } from '../config/api.js';
 import { queryClient } from '../config/query.js';
 

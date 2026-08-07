@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSearchTasks } from '../hooks/useTasks.js';
 import { useDebounce } from '../hooks/useDebounce.js';
-import { Input, Spinner } from '@todo/ui';
+import { Task } from '@todo/types';
+import { Spinner } from '@todo/ui';
 import { Search } from 'lucide-react';
 
 export default function SearchBar() {
@@ -43,7 +44,7 @@ export default function SearchBar() {
             </div>
           ) : results && results.length > 0 ? (
             <div className="divide-y">
-              {results.map((task) => (
+              {results.map((task: Task) => (
                 <button
                   key={task.id}
                   onClick={() => handleSelect(task.id)}

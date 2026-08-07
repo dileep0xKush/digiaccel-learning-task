@@ -5,6 +5,7 @@ import { useDebounce } from '../hooks/useDebounce.js';
 import TaskItem from '../components/TaskItem.js';
 import { Button, Input } from '@todo/ui';
 import { ArrowLeft } from 'lucide-react';
+import { Task } from '@todo/types';
 
 export default function SearchPage() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function SearchPage() {
           </div>
         ) : results && results.length > 0 ? (
           <div className="space-y-2">
-            {results.map((task) => (
+            {results.map((task: Task) => (
               <TaskItem key={task.id} task={task} />
             ))}
           </div>

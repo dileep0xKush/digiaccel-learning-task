@@ -1,7 +1,7 @@
 {
   "extends": "./base.json",
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "ESNext",
     "lib": ["ES2020"]
   }
 }

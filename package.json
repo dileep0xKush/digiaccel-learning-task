@@ -6,8 +6,7 @@
   "type": "module",
   "workspaces": [
     "apps/*",
-    "packages/*",
-    "prisma"
+    "packages/*"
   ],
   "scripts": {
     "dev": "turbo run dev --parallel",
@@ -18,8 +17,8 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,json,md}\"",
     "test": "turbo run test",
     "clean": "turbo run clean && rm -rf node_modules && find . -type d -name node_modules -exec rm -rf {} + 2>/dev/null; true",
-    "db:migrate": "cd prisma && npm run migrate",
-    "db:seed": "cd prisma && npm run seed"
+    "db:migrate": "cd apps/api && npm run db:migrate",
+    "db:seed": "cd apps/api && npm run db:seed"
   },
   "devDependencies": {
     "prettier": "^3.0.0",

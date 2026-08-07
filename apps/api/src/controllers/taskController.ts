@@ -108,7 +108,7 @@ export const taskController = {
 
     const tasks = await taskService.searchTasks(query);
 
-    res.json({
+    return res.json({
       success: true,
       data: tasks.map((t) => ({
         ...t,
@@ -119,7 +119,7 @@ export const taskController = {
     });
   },
 
-  async getWeeklyTasks(req: Request, res: Response) {
+  async getWeeklyTasks(_req: Request, res: Response) {
     const weeks = await taskService.getWeeklyTasks();
 
     res.json({
@@ -128,7 +128,7 @@ export const taskController = {
     });
   },
 
-  async countAllTasks(req: Request, res: Response) {
+  async countAllTasks(_req: Request, res: Response) {
     const count = await taskService.countAllTasks();
 
     res.json({

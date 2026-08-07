@@ -1,7 +1,7 @@
 import { CreateTaskSchema, UpdateTaskSchema, UpdateTaskStatusSchema } from '@todo/types';
 import { Request, Response, NextFunction } from 'express';
 
-export const validateCreateTask = (req: Request, res: Response, next: NextFunction) => {
+export const validateCreateTask = (req: Request, _res: Response, next: NextFunction) => {
   try {
     req.body = CreateTaskSchema.parse(req.body);
     next();
@@ -10,7 +10,7 @@ export const validateCreateTask = (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const validateUpdateTask = (req: Request, res: Response, next: NextFunction) => {
+export const validateUpdateTask = (req: Request, _res: Response, next: NextFunction) => {
   try {
     req.body = UpdateTaskSchema.parse(req.body);
     next();
@@ -19,7 +19,7 @@ export const validateUpdateTask = (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const validateUpdateTaskStatus = (req: Request, res: Response, next: NextFunction) => {
+export const validateUpdateTaskStatus = (req: Request, _res: Response, next: NextFunction) => {
   try {
     req.body = UpdateTaskStatusSchema.parse(req.body);
     next();

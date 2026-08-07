@@ -1,12 +1,19 @@
 import { PrismaClient, Priority, Status } from '@prisma/client';
 import { CreateTaskInput, UpdateTaskInput } from '@todo/types';
 
-const prisma = new PrismaClient();
+let prisma: PrismaClient | null = null;
+
+const getPrismaClient = () => {
+  if (!prisma) {
+    prisma = new PrismaClient();
+  }
+  return prisma;
+};
 
 export const taskRepository = {
   async findAll(skip = 0, take = 50, status?: Status) {
     const where = status ? { status } : {};
-    return prisma.task.findMany({
+    return getPrismaClient().task.findMany({
       where,
       skip,
       take,
@@ -15,13 +22,13 @@ export const taskRepository = {
   },
 
   async findById(id: string) {
-    return prisma.task.findUnique({
+    return getPrismaClient().task.findUnique({
       where: { id },
     });
   },
 
   async create(data: CreateTaskInput) {
-    return prisma.task.create({
+    return getPrismaClient().task.create({
       data: {
         title: data.title,
         description: data.description,
@@ -33,7 +40,7 @@ export const taskRepository = {
   },
 
   async update(id: string, data: UpdateTaskInput) {
-    return prisma.task.update({
+    return getPrismaClient().task.update({
       where: { id },
       data: {
         ...(data.title && { title: data.title }),
@@ -46,20 +53,20 @@ export const taskRepository = {
   },
 
   async updateStatus(id: string, status: Status) {
-    return prisma.task.update({
+    return getPrismaClient().task.update({
       where: { id },
       data: { status },
     });
   },
 
   async delete(id: string) {
-    return prisma.task.delete({
+    return getPrismaClient().task.delete({
       where: { id },
     });
   },
 
   async search(query: string) {
-    return prisma.task.findMany({
+    return getPrismaClient().task.findMany({
       where: {
         OR: [
           { title: { contains: query, mode: 'insensitive' } },
@@ -71,11 +78,11 @@ export const taskRepository = {
   },
 
   async countAll() {
-    return prisma.task.count();
+    return getPrismaClient().task.count();
   },
 
   async getWeeklyTasks(weekStart: Date, weekEnd: Date) {
-    return prisma.task.findMany({
+    return getPrismaClient().task.findMany({
       where: {
         dueDate: {
           gte: weekStart,

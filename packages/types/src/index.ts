@@ -28,7 +28,7 @@ export const TaskSchema = z.object({
 export const CreateTaskSchema = z.object({
   title: z.string().min(1, 'Title is required').max(255),
   description: z.string().optional().default(''),
-  dueDate: z.string().datetime().or(z.string().date()),
+  dueDate: z.string().refine((val) => !isNaN(Date.parse(val)), 'Invalid date format'),
   priority: TaskPrioritySchema.default('MEDIUM'),
   status: TaskStatusSchema.default('IN_PROGRESS'),
 });
@@ -36,7 +36,7 @@ export const CreateTaskSchema = z.object({
 export const UpdateTaskSchema = z.object({
   title: z.string().min(1).max(255).optional(),
   description: z.string().optional(),
-  dueDate: z.string().datetime().or(z.string().date()).optional(),
+  dueDate: z.string().refine((val) => !isNaN(Date.parse(val)), 'Invalid date format').optional(),
   priority: TaskPrioritySchema.optional(),
   status: TaskStatusSchema.optional(),
 });

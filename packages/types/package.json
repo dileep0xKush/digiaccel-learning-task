@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Shared TypeScript types",
   "private": true,
+  "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "scripts": {
