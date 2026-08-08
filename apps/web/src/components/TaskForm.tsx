@@ -76,7 +76,7 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
 
           {/* Form Content */}
           <div className="p-8">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               {/* Title Field */}
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -85,11 +85,11 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
                 </label>
                 <Input
                   placeholder="What do you need to do?"
-                  className="border-2 border-gray-200 focus:border-blue-500 py-3 px-4 rounded-lg text-base"
+                  className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm"
                   {...register('title')}
                 />
                 {errors.title && (
-                  <p className="text-red-500 text-sm font-medium">{errors.title.message}</p>
+                  <p className="text-red-500 text-xs font-medium">{errors.title.message}</p>
                 )}
               </div>
 
@@ -101,29 +101,29 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
                 </label>
                 <Textarea
                   placeholder="Add details about your task (optional)"
-                  className="border-2 border-gray-200 focus:border-blue-500 py-3 px-4 rounded-lg text-base min-h-28"
+                  className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm min-h-20"
                   {...register('description')}
                 />
                 {errors.description && (
-                  <p className="text-red-500 text-sm font-medium">{errors.description.message}</p>
+                  <p className="text-red-500 text-xs font-medium">{errors.description.message}</p>
                 )}
               </div>
 
-              {/* Date & Priority Grid */}
-              <div className="grid grid-cols-2 gap-6">
+              {/* Date & Priority Inline */}
+              <div className="grid grid-cols-3 gap-4">
                 {/* Date Field */}
-                <div className="space-y-2">
+                <div className="col-span-2 space-y-2">
                   <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                     <Clock size={18} className="text-blue-600" />
                     Due Date & Time
                   </label>
                   <Input
                     type="datetime-local"
-                    className="border-2 border-gray-200 focus:border-blue-500 py-3 px-4 rounded-lg text-base"
+                    className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm w-full"
                     {...register('dueDate')}
                   />
                   {errors.dueDate && (
-                    <p className="text-red-500 text-sm font-medium">{errors.dueDate.message}</p>
+                    <p className="text-red-500 text-xs font-medium">{errors.dueDate.message}</p>
                   )}
                 </div>
 
@@ -134,7 +134,7 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
                     Priority
                   </label>
                   <Select
-                    className="border-2 border-gray-200 focus:border-blue-500 py-3 px-4 rounded-lg text-base"
+                    className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm w-full"
                     {...register('priority')}
                   >
                     <option value="LOW">Low</option>
@@ -144,7 +144,7 @@ export default function TaskForm({ isOpen, onClose, onSuccess }: TaskFormProps) 
                     <option value="HIGH">High</option>
                   </Select>
                   {errors.priority && (
-                    <p className="text-red-500 text-sm font-medium">{errors.priority.message}</p>
+                    <p className="text-red-500 text-xs font-medium">{errors.priority.message}</p>
                   )}
                 </div>
               </div>

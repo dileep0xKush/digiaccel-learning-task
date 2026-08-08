@@ -64,7 +64,7 @@ export default function TaskFormEdit({ task, onSuccess }: TaskFormEditProps) {
         </div>
 
         <div className="p-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Title Field */}
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -73,10 +73,12 @@ export default function TaskFormEdit({ task, onSuccess }: TaskFormEditProps) {
               </label>
               <Input
                 placeholder="Enter task title"
-                className="border-2 border-gray-200 focus:border-blue-500"
+                className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm"
                 {...register('title')}
               />
-              {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
+              {errors.title && (
+                <p className="text-red-500 text-xs font-medium">{errors.title.message}</p>
+              )}
             </div>
 
             {/* Description Field */}
@@ -87,37 +89,40 @@ export default function TaskFormEdit({ task, onSuccess }: TaskFormEditProps) {
               </label>
               <Textarea
                 placeholder="Enter task description (optional)"
-                className="border-2 border-gray-200 focus:border-blue-500 min-h-32"
+                className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm min-h-20"
                 {...register('description')}
               />
               {errors.description && (
-                <p className="text-red-500 text-sm">{errors.description.message}</p>
+                <p className="text-red-500 text-xs font-medium">{errors.description.message}</p>
               )}
             </div>
 
-            {/* Two Column Layout for Date and Time */}
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                <Clock size={18} className="text-blue-600" />
-                Due Date & Time
-              </label>
-              <Input
-                type="datetime-local"
-                className="border-2 border-gray-200 focus:border-blue-500"
-                {...register('dueDate')}
-              />
-              {errors.dueDate && <p className="text-red-500 text-sm">{errors.dueDate.message}</p>}
-            </div>
+            {/* Inline Date, Priority, and Status */}
+            <div className="grid grid-cols-4 gap-4">
+              {/* Date Field */}
+              <div className="col-span-2 space-y-2">
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                  <Clock size={18} className="text-blue-600" />
+                  Due Date & Time
+                </label>
+                <Input
+                  type="datetime-local"
+                  className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm w-full"
+                  {...register('dueDate')}
+                />
+                {errors.dueDate && (
+                  <p className="text-red-500 text-xs font-medium">{errors.dueDate.message}</p>
+                )}
+              </div>
 
-            {/* Priority and Status Grid */}
-            <div className="grid grid-cols-2 gap-6">
+              {/* Priority */}
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                   <Flag size={18} className="text-orange-600" />
                   Priority
                 </label>
                 <Select
-                  className="border-2 border-gray-200 focus:border-blue-500"
+                  className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm w-full"
                   {...register('priority')}
                 >
                   <option value="LOW">Low</option>
@@ -125,23 +130,26 @@ export default function TaskFormEdit({ task, onSuccess }: TaskFormEditProps) {
                   <option value="HIGH">High</option>
                 </Select>
                 {errors.priority && (
-                  <p className="text-red-500 text-sm">{errors.priority.message}</p>
+                  <p className="text-red-500 text-xs font-medium">{errors.priority.message}</p>
                 )}
               </div>
 
+              {/* Status */}
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                   <CheckCircle2 size={18} className="text-green-600" />
                   Status
                 </label>
                 <Select
-                  className="border-2 border-gray-200 focus:border-blue-500"
+                  className="border-2 border-gray-200 focus:border-blue-500 py-2.5 px-4 rounded-lg text-sm w-full"
                   {...register('status')}
                 >
                   <option value="IN_PROGRESS">In Progress</option>
                   <option value="COMPLETED">Completed</option>
                 </Select>
-                {errors.status && <p className="text-red-500 text-sm">{errors.status.message}</p>}
+                {errors.status && (
+                  <p className="text-red-500 text-xs font-medium">{errors.status.message}</p>
+                )}
               </div>
             </div>
 
