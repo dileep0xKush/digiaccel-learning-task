@@ -1,148 +1,47 @@
 import { Request, Response } from 'express';
 import { taskService } from '../services/taskService.js';
-import type { TaskStatus } from '../models/Task.js';
+import type { GetAllTasksQuery } from '../types/api.js';
 
 export const taskController = {
   async getAllTasks(req: Request, res: Response) {
-    const skip = parseInt(req.query.skip as string) || 0;
-    const take = parseInt(req.query.take as string) || 50;
-    const status = req.query.status as TaskStatus | undefined;
+    const query: GetAllTasksQuery = {
+      skip: parseInt(req.query.skip as string) || 0,
+      take: parseInt(req.query.take as string) || 50,
+      status: req.query.status as GetAllTasksQuery['status'],
+    };
 
-    const tasks = await taskService.getAllTasks(skip, take, status);
-    const total = await taskService.countAllTasks();
-
-    res.json({
-      success: true,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      data: tasks.map((t: any) => ({
-        title: t.title,
-        description: t.description || '',
-        dueDate: t.dueDate.toISOString(),
-        priority: t.priority,
-        status: t.status,
-        createdAt: t.createdAt.toISOString(),
-        updatedAt: t.updatedAt.toISOString(),
-        id: t._id?.toString() || t.id,
-      })),
-      total,
-      page: Math.floor(skip / take) + 1,
-      pageSize: take,
-      hasMore: skip + take < total,
-    });
+    const response = await taskService.getAllTasksFormatted(query);
+    res.json(response);
   },
 
   async getTaskById(req: Request, res: Response) {
     const { id } = req.params;
-    const task = await taskService.getTaskById(id);
-
-    if (!task) {
-      res.status(404).json({
-        success: false,
-        message: 'Task not found',
-      });
-      return;
-    }
-
-    res.json({
-      success: true,
-      data: {
-        title: task.title,
-        description: task.description || '',
-        dueDate: task.dueDate.toISOString(),
-        priority: task.priority,
-        status: task.status,
-        createdAt: task.createdAt.toISOString(),
-        updatedAt: task.updatedAt.toISOString(),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        id: (task as any)._id?.toString() || task.id,
-      },
-    });
+    const response = await taskService.getTaskByIdFormatted(id);
+    res.json(response);
   },
 
   async createTask(req: Request, res: Response) {
-    const task = await taskService.createTask(req.body);
-
-    res.status(201).json({
-      success: true,
-      data: {
-        title: task.title,
-        description: task.description || '',
-        dueDate: task.dueDate.toISOString(),
-        priority: task.priority,
-        status: task.status,
-        createdAt: task.createdAt.toISOString(),
-        updatedAt: task.updatedAt.toISOString(),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        id: (task as any)._id?.toString() || task.id,
-      },
-    });
+    const response = await taskService.createTaskFormatted(req.body);
+    res.status(201).json(response);
   },
 
   async updateTask(req: Request, res: Response) {
     const { id } = req.params;
-    const task = await taskService.updateTask(id, req.body);
-
-    if (!task) {
-      res.status(404).json({
-        success: false,
-        message: 'Task not found',
-      });
-      return;
-    }
-
-    res.json({
-      success: true,
-      data: {
-        title: task.title,
-        description: task.description || '',
-        dueDate: task.dueDate.toISOString(),
-        priority: task.priority,
-        status: task.status,
-        createdAt: task.createdAt.toISOString(),
-        updatedAt: task.updatedAt.toISOString(),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        id: (task as any)._id?.toString() || task.id,
-      },
-    });
+    const response = await taskService.updateTaskFormatted(id, req.body);
+    res.json(response);
   },
 
   async updateTaskStatus(req: Request, res: Response) {
     const { id } = req.params;
     const { status } = req.body;
-    const task = await taskService.updateTaskStatus(id, status);
-
-    if (!task) {
-      res.status(404).json({
-        success: false,
-        message: 'Task not found',
-      });
-      return;
-    }
-
-    res.json({
-      success: true,
-      data: {
-        title: task.title,
-        description: task.description || '',
-        dueDate: task.dueDate.toISOString(),
-        priority: task.priority,
-        status: task.status,
-        createdAt: task.createdAt.toISOString(),
-        updatedAt: task.updatedAt.toISOString(),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        id: (task as any)._id?.toString() || task.id,
-      },
-    });
+    const response = await taskService.updateTaskStatusFormatted(id, status);
+    res.json(response);
   },
 
   async deleteTask(req: Request, res: Response) {
     const { id } = req.params;
-    await taskService.deleteTask(id);
-
-    res.json({
-      success: true,
-      message: 'Task deleted successfully',
-    });
+    const response = await taskService.deleteTaskFormatted(id);
+    res.json(response);
   },
 
   async searchTasks(req: Request, res: Response) {
@@ -155,22 +54,8 @@ export const taskController = {
       });
     }
 
-    const tasks = await taskService.searchTasks(query);
-
-    return res.json({
-      success: true,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      data: tasks.map((t: any) => ({
-        title: t.title,
-        description: t.description || '',
-        dueDate: t.dueDate.toISOString(),
-        priority: t.priority,
-        status: t.status,
-        createdAt: t.createdAt.toISOString(),
-        updatedAt: t.updatedAt.toISOString(),
-        id: t._id?.toString() || t.id,
-      })),
-    });
+    const response = await taskService.searchTasksFormatted(query);
+    return res.json(response);
   },
 
   async getWeeklyTasks(_req: Request, res: Response) {
@@ -183,11 +68,7 @@ export const taskController = {
   },
 
   async countAllTasks(_req: Request, res: Response) {
-    const count = await taskService.countAllTasks();
-
-    res.json({
-      success: true,
-      data: { count },
-    });
+    const response = await taskService.countAllTasksFormatted();
+    res.json(response);
   },
 };

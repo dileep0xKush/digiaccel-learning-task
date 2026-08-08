@@ -1,20 +1,22 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import { config } from '../config/index.js';
-
-interface ApiError extends Error {
-  statusCode?: number;
-}
+import { AppError } from '../utils/AppError.js';
 
 export const errorHandler = (
-  err: ApiError | ZodError | Error,
-  _req: Request,
+  err: Error | ZodError,
+  req: Request,
   res: Response,
   _next: NextFunction
 ) => {
-  console.error('Error:', err);
+  const timestamp = new Date().toISOString();
+  const method = req.method;
+  const path = req.path;
+
+  console.error(`[${timestamp}] ERROR - ${method} ${path}:`, err);
 
   if (err instanceof ZodError) {
+    console.warn(`[${timestamp}] Validation failed for ${method} ${path}`);
     res.status(400).json({
       success: false,
       error: 'Validation error',
@@ -23,18 +25,34 @@ export const errorHandler = (
     return;
   }
 
-  if (err instanceof Error) {
-    const statusCode = (err as ApiError).statusCode || 500;
-    res.status(statusCode).json({
+  if (err instanceof AppError) {
+    res.status(err.statusCode).json({
       success: false,
-      error: err.message || 'Internal server error',
-      ...(config.nodeEnv === 'development' && { stack: err.stack }),
+      error: err.message,
+      timestamp,
     });
+    return;
+  }
+
+  if (err instanceof Error) {
+    const errorResponse: Record<string, unknown> = {
+      success: false,
+      error: 'Internal server error',
+      timestamp,
+    };
+
+    if (config.nodeEnv === 'development') {
+      errorResponse.message = err.message;
+      errorResponse.stack = err.stack;
+    }
+
+    res.status(500).json(errorResponse);
     return;
   }
 
   res.status(500).json({
     success: false,
     error: 'Internal server error',
+    timestamp,
   });
 };
